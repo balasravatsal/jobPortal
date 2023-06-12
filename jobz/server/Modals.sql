@@ -1,3 +1,5 @@
+-- id => UUID
+
 CREATE TABLE user(
     user_id int primary key not null,
     user_email varchar(64) not null,
@@ -27,4 +29,3 @@ create table applied_jobs (
     emp_id int FOREIGN KEY REFERENCES employee(emp_id)
 );
 
--- id => UUID
