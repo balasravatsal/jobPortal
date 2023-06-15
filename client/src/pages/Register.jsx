@@ -36,10 +36,9 @@ const Register = () => {
         }
         if(isMember) {
             dispatch(loginUser({email: email, password: password}))
-            return;
-        }
+        }else{
         dispatch(registerUser({name, email, password}))
-    }
+    }}
 
     return (
         <Wrapper classname={'full-page'}>
@@ -64,10 +63,20 @@ const Register = () => {
                          handleChange={handleChange}
                 />
 
-                <button type={'submit'} className={'btn btn-block'}>Submit</button>
+                <button type={'submit'}
+                        className={'btn btn-block'}
+                        disabled={isLoading}
+                >
+                    Submit
+                </button>
                 <p>
                     {values.isMember ? 'Not a member yet?' : 'Already Registered?'}
-                    <button type={'button'} onClick={toggleMember} className={'member-btn'}>{values.isMember ? 'Register' : 'Login'}</button>
+                    <button type={'button'}
+                            onClick={toggleMember}
+                            className={'member-btn'}
+                    >
+                        {values.isMember ? 'Register' : 'Login'}
+                    </button>
                 </p>
             </form>
         </Wrapper>
