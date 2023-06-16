@@ -3,14 +3,19 @@ import Wrapper from "../../assets/wrappers/SharedLayout";
 import {BigSidebar, Navbar, SmallSidebar} from "../../components";
 
 const SharedLayout = () => {
+
+    const style = {
+        width: 'auto',
+        display: 'block'
+    }
     return (
         <Wrapper>
-            <main className={'dashboard'}>
+            <main className={'dashboard'} >
                 <SmallSidebar />
                 <BigSidebar />
                 <div>
                     <Navbar />
-                    <div className={'dashboard'}>
+                    <div className={'dashboard'} style={style}>
                         <Outlet />
                     </div>
                 </div>
