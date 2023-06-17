@@ -16,6 +16,7 @@ const SharedLayout = () => {
                 <div>
                     <Navbar />
                     <div className={'dashboard'} style={style}>
+                    {/*<div className={'dashboard'}>*/}
                         <Outlet />
                     </div>
                 </div>

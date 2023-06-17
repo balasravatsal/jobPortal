@@ -10,6 +10,7 @@ import pool from './db.js'
 // Middleware
 import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
+import auth from "./middleware/auth.js";
 
 // routers
 import authRoutes from "./routes/authRoutes.js";
@@ -38,7 +39,7 @@ app.get('/', async (req, res) => {
 
 
 app.use(`/api/v1/auth`, authRoutes)
-app.use(`/api/v1/jobs`, jobsRoutes)
+app.use(`/api/v1/jobs`, auth, jobsRoutes)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)

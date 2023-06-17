@@ -81,7 +81,20 @@ const loginUser = async (req, res) => {
 }
 
 
-const updateUser = (req, res) => {
+const updateUser = async (req, res) => {
+
+    // console.log(req.body)
+    // console.log(req.user)
+    // console.log(req)
+    const {email, name, company, location} = req.body
+    const { userId } = req.user
+    if (!location || !name || !email || !company) {
+        throw new BadRequestError('Please provide all details')
+    }
+    const updateUserQuery = `UPDATE "user" SET user_name = $1, user_email = $2, location = $3, company_name = $4 WHERE user_id = $5;`
+    const updateUser = await pool.query(updateUserQuery, [name, email, location, company, userId])
+    console.log(updateUser.rows[0])
+
     res.send('update user')
 }
 
