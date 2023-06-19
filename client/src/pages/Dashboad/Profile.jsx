@@ -23,6 +23,7 @@ const Profile = () => {
             return;
         }
         dispatch(updateUser(userData));
+        // console.log(localStorage.user)
     };
 
     const handleChange = (e) => {

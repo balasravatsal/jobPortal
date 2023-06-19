@@ -113,22 +113,22 @@ const userSlice = createSlice({
                 state.isLoading = false
                 toast.error(payload)
             })
-    // extraReducers: {
-    //     [registerUser.pending]: (state) => {
-    //             state.isLoading = true
-    //     },
-    //     [registerUser.fulfilled]:(state, {payload}) => {
-    //         const {user} = payload
-    //         console.log(user)
-    //         state.isLoading = false
-    //         state.user = user
-    //         // addUserToLocalStorage(user)
-    //         toast.success(`Hey there, ${user.name}`)
-    //     },
-    //     [registerUser.rejected]: (state, {payload}) => {
-    //         state.isLoading = false
-    //         toast.error(payload)
-    //     }
+        // extraReducers: {
+        //     [registerUser.pending]: (state) => {
+        //             state.isLoading = true
+        //     },
+        //     [registerUser.fulfilled]:(state, {payload}) => {
+        //         const {user} = payload
+        //         console.log(user)
+        //         state.isLoading = false
+        //         state.user = user
+        //         // addUserToLocalStorage(user)
+        //         toast.success(`Hey there, ${user.name}`)
+        //     },
+        //     [registerUser.rejected]: (state, {payload}) => {
+        //         state.isLoading = false
+        //         toast.error(payload)
+        //     }
     }
 })
 
