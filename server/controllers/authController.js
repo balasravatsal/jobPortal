@@ -93,8 +93,8 @@ const updateUser = async (req, res) => {
     }
     const updateUserQuery = `UPDATE "user" SET user_name = $1, user_email = $2, location = $3, company_name = $4 WHERE user_id = $5;`
     const updateUser = await pool.query(updateUserQuery, [name, email, location, company, userId])
-    console.log(updateUser.rows[0])
-
+    // console.log(updateUser)
+    // console.log('authController')
     res.send('update user')
 }
 

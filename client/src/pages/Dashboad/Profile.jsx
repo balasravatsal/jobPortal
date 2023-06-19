@@ -3,7 +3,7 @@ import { FormRow } from '../../components';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-// import { updateUser } from '../../features/user/UserSlice';
+import { updateUser } from '../../features/user/UserSlice';
 
 const Profile = () => {
     const { isLoading, user } = useSelector((store) => store.user);
@@ -11,18 +11,18 @@ const Profile = () => {
     const [userData, setUserData] = useState({
         name: user?.name || '',
         email: user?.email || '',
-        lastName: user?.lastName || '',
+        company: user?.company_name || '',
         location: user?.location || '',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { name, email, lastName, location } = userData;
-        if (!name || !email || !lastName || !location) {
+        const { name, email, company, location } = userData;
+        if (!name || !email || !company || !location) {
             toast.error('please fill out all fields');
-            // return;
+            return;
         }
-        // dispatch(updateUser(userData));
+        dispatch(updateUser(userData));
     };
 
     const handleChange = (e) => {
@@ -44,9 +44,9 @@ const Profile = () => {
                     />
                     <FormRow
                         type='text'
-                        labelText='Company'
-                        name='Company'
-                        value={userData.lastName}
+                        labelText='company'
+                        name='company'
+                        value={userData.company}
                         handleChange={handleChange}
                     />
                     <FormRow
