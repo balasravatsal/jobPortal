@@ -44,8 +44,11 @@ const AddJob = () => {
         }
     }, [dispatch, isEditing, user.location])
 
+    const containerStyle = {
+        margin: '0.5rem', // Set margin value as per your requirement
+    };
     return (
-        <Wrapper>
+        <Wrapper style={containerStyle}>
             <form className='form'>
                 <h3>{isEditing ? 'edit job' : 'add job'}</h3>
 

@@ -31,9 +31,11 @@ const Profile = () => {
         const value = e.target.value;
         setUserData({ ...userData, [name]: value });
     };
-
+    const containerStyle = {
+        margin: '0.5rem', // Set margin value as per your requirement
+    };
     return (
-        <Wrapper>
+        <Wrapper style={containerStyle}>
             <form className='form' onSubmit={handleSubmit}>
                 <h3>profile</h3>
                 <div className='form-center'>

@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import customFetch from '../../utils/axios';
 import { getUserFromLocalStorage } from '../../utils/localStorage';
 import error from "../../pages/Error";
+import {showLoading, hideLoading, getAllJobs} from "../allJobs/allJobsSlice";
 
 const initialState = {
     isLoading: false,
@@ -11,8 +12,8 @@ const initialState = {
     jobLocation: '',
     jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
     jobType: 'full-time',
-    statusOptions: ['interview', 'declined', 'pending'],
-    status: 'pending',
+    statusOptions: ['Registration', 'Interview', 'Closed'],
+    status: 'Registration',
     isEditing: false,
     editJobId: '',
 };

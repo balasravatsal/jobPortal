@@ -2,7 +2,7 @@ import pool from "../db.js";
 import {BadRequestError} from "../errors/index.js";
 
 const createJob = async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     // console.log(localStorage)
     const { company, position, status, jobType, jobLocation} = req.body
     const user_id = req.user.userId
@@ -15,12 +15,14 @@ const createJob = async (req, res) => {
 }
 const deleteJob = async (req, res) => {
 
-
-
     res.send('delete job')
 }
 const getAllJobs = async (req, res) => {
-    res.send('get all jobs')
+
+    const jobsQuery = `SELECT * FROM "job";`
+    const jobs = await pool.query(jobsQuery)
+    // console.log(jobs)
+    res.status(200).json({jobs: jobs.rows, totalJobs: jobs.rowCount, numOfPages: 1})
 }
 const updateJob = async (req, res) => {
     res.send('update jobs')

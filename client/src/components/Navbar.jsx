@@ -75,7 +75,7 @@ export default Navbar;
 //                 <li>
 //                     <Link to="/all-jobs">
 //                         <i className="fa fa-briefcase"></i>
-//                         <span>All Jobs</span>
+//                         <span>All Job</span>
 //                     </Link>
 //                 </li>
 //                 <li>
