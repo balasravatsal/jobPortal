@@ -5,11 +5,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import JobInfo from './JobInfo';
 import moment from 'moment';
 import { deleteJob, setEditJob } from '../features/job/jobSlice';
+import {toast} from "react-toastify";
 
 const Job = ({job_id, position, company, job_location, job_type, created_at, status, created_by}) => {
     const { user_id } = useSelector(store => store.user.user)
     
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const date = moment(created_at).format('MMM Do, YYYY');
 
     return (
@@ -36,8 +37,15 @@ const Job = ({job_id, position, company, job_location, job_type, created_at, sta
                         <Link
                             to={`/add-job`}
                             className={'btn edit-btn'}
-                            onClick={() =>{
-                                console.log('edit job')
+                            onClick={() => {
+                                dispatch(setEditJob({
+                                    editJobId: job_id,
+                                    position,
+                                    company,
+                                    job_location,
+                                    job_type,
+                                    status
+                                }))
                             }}
                         >
                             Edit Job
@@ -45,7 +53,8 @@ const Job = ({job_id, position, company, job_location, job_type, created_at, sta
                         <button type={'button'}
                                 className={'btn delete-btn'}
                                 onClick={() => {
-                                    console.log('delete job')
+                                    dispatch(deleteJob(job_id))
+                                    toast.success('Job Deleted')
                                 }}
                         >
                             Delete
