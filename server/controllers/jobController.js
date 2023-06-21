@@ -1,16 +1,18 @@
 import pool from "../db.js";
-import {BadRequestError, UnauthenticatedError} from "../errors/index.js";
+import {BadRequestError} from "../errors/index.js";
 
 const createJob = async (req, res) => {
-    // console.log(req.body)
+    console.log(req.body)
     // console.log(localStorage)
-    const { company, position, status, jobType, jobLocation} = req.body
+    const { company, position, status, job_type, job_location} = req.body
     const user_id = req.user.userId
     if (!position || !company) {
         throw new BadRequestError('Please provide all values');
     }
-    const createJobQuery = `INSERT INTO "job" (job_id, company, position, status, job_type, job_location, created_at, updated_at, created_by) VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $6) RETURNING *;`
-    const createJob = await pool.query(createJobQuery, [company, position, status, jobType, jobLocation, user_id])
+    console.log('hello')
+    const createJobQuery = `INSERT INTO public.job (job_id, company, position, status, job_type, job_location, created_at, updated_at, created_by) VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $6) RETURNING *;`
+    const createJob = await pool.query(createJobQuery, [company, position, status, job_type, job_location, user_id])
+
     res.status(200).json(createJob);
 }
 
@@ -18,7 +20,8 @@ const createJob = async (req, res) => {
 const deleteJob = async (req, res) => {
     const {id} = req.params
     const user_id = req.user.userId
-    console.log(id, user_id)
+    // console.log(id, user_id)
+    // const checkIfCreated =
 
     const deleteJobQuery = `DELETE FROM public.job WHERE job_id = $1;`
     await pool.query(deleteJobQuery, [id])
@@ -34,11 +37,18 @@ const getAllJobs = async (req, res) => {
 }
 const updateJob = async (req, res) => {
     const { id } = req.params
-    console.log('jdyj')
+    console.log(req.params)
+    const { company, position, job_type, job_location, status } = req.body
+    console.log(req.body)
+    // console.log(company)
 
+   const modifyJobQuery = `UPDATE public.job SET company=$1, "position"=$2, status=$3, job_type=$4, job_location=$5, updated_at=CURRENT_TIMESTAMP WHERE job_id=$6;`
+   const modifyJob = await pool.query(modifyJobQuery, [company, position, status, job_type, job_location, id])
+
+   return res.json('Successfully updated')
 }
 const showStats = async (req, res) => {
-    res.send('show stats')
+    res.status(200).send('show stats')
 }
 
 export {createJob, deleteJob, getAllJobs, updateJob, showStats}

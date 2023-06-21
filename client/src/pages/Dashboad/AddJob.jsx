@@ -9,12 +9,12 @@ import {useEffect} from "react";
 import {loginUser} from "../../features/user/UserSlice";
 
 const AddJob = () => {
-    const {
+    let {
         isLoading,
         position,
         company,
-        jobLocation,
-        jobType,
+        job_location: job_location,
+        job_type,
         jobTypeOptions,
         status,
         statusOptions,
@@ -22,24 +22,26 @@ const AddJob = () => {
         editJobId,
     } = useSelector((store) => store.job);
     const dispatch = useDispatch();
-    const { job_location } = useSelector(store => store.allJobs)        //#todo
+    // const { job_location } = useSelector(store => store.allJobs)        //#todo
     const { user } = useSelector(store => store.user)
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!position || !company || !jobLocation) {
+        if (!position || !company || !job_location) {
             toast.error('Please Fill Out All Fields');
             return
         }
         if(isEditing){
             dispatch(editJob({
-                jobId: editJobId,
-                job: {position, company, jobLocation, jobType, status}
+                job_id: editJobId,
+                job: {position, company, job_location: job_location, job_type, status}
             }))
+            // console.log(editJobId)
+            isEditing = !isEditing
             return
         }
-        dispatch(createJob({position, company, jobLocation, jobType, status}))
+        dispatch(createJob({position, company, job_location: job_location, job_type, status}))
     };
     const handleJobInput = (e) => {
         // console.log(job_location)
@@ -50,7 +52,7 @@ const AddJob = () => {
 
     useEffect(() => {
         if(!isEditing) {
-            dispatch(handleChange({name: 'jobLocation', value: user.location}))
+            dispatch(handleChange({name: 'job_location', value: user.location}))
         }
     }, [dispatch, isEditing, user.location])
 
@@ -81,8 +83,8 @@ const AddJob = () => {
                     <FormRow
                         type='text'
                         labelText='job location'
-                        name='jobLocation'
-                        value={jobLocation}        // #todo
+                        name='job_location'
+                        value={job_location}        // #todo
                         handleChange={handleJobInput}
                     />
 
@@ -96,7 +98,7 @@ const AddJob = () => {
                     <FormRowSelect
                         name='jobType'
                         labelText='job type'
-                        value={jobType}
+                        value={job_type}
                         handleChange={handleJobInput}
                         list={jobTypeOptions}
                     />

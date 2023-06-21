@@ -8,9 +8,9 @@ const initialState = {
     isLoading: false,
     position: '',
     company: '',
-    jobLocation: '',
+    job_location: '',
     jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
-    jobType: 'full-time',
+    job_type: 'full-time',
     statusOptions: ['Registration', 'Interview', 'Closed'],
     status: 'Registration',
     isEditing: false,
@@ -64,8 +64,9 @@ export const deleteJob = createAsyncThunk(
 export const editJob = createAsyncThunk(
     `job/editJob`,
     async ({job_id, job}, thunkAPI) => {
+        // console.log(job)
         try {
-            const resp = await customFetch.path(`/jobs/${job_id}`, job, {
+            const resp = await customFetch.patch(`/jobs/${job_id}`,  job, {
                 headers: {
                     authorization: `Bearer ${thunkAPI.getState().user.user.token}`
                 }
@@ -91,7 +92,7 @@ const jobSlice = createSlice({
         clearInput: () => {
             return {
                 ...initialState,
-                jobLocation: getUserFromLocalStorage()?.location || '',
+                job_location: getUserFromLocalStorage()?.location || '',
             };
         },
         setEditJob: (state, action) => {
