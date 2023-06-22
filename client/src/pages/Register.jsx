@@ -5,6 +5,7 @@ import {toast} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import {loginUser, registerUser} from "../features/user/UserSlice";
 import {useNavigate} from "react-router-dom";
+import FormRowSelect from "../components/FormRowSelect";
 
 const initialState = {
     name: '',
@@ -12,6 +13,7 @@ const initialState = {
     password: '',
     isMember: false,
     showAlert: false,
+    role: ''
 }
 
 const Register = () => {
@@ -71,6 +73,12 @@ const Register = () => {
                          name={'password'}
                          value={values.password}
                          handleChange={handleChange}
+                />
+                <FormRowSelect
+                    name='status'
+                    value={status}
+                    handleChange={handleJobInput}
+                    list={statusOptions}
                 />
 
                 <button type={'submit'}

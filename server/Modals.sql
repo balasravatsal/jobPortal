@@ -29,3 +29,8 @@ create table employee (
 --     emp_id int FOREIGN KEY REFERENCES employee(emp_id)
 -- );
 
+ALTER TABLE "user" ADD COLUMN role VARCHAR(50);
+
+update "user" set role = 'employer';
+
+select * from "user";
