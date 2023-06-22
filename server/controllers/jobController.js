@@ -20,12 +20,21 @@ const createJob = async (req, res) => {
 const deleteJob = async (req, res) => {
     const {id} = req.params
     const user_id = req.user.userId
-    // console.log(id, user_id)
+    // console.log(user_id)
     // const checkIfCreated =
 
-    const deleteJobQuery = `DELETE FROM public.job WHERE job_id = $1;`
-    await pool.query(deleteJobQuery, [id])
-    res.status(200).json({msg: 'Job removed'})
+    const checkIfCreatedQuery = `SELECT created_by FROM public.job WHERE job_id = $1`
+    const checkIfCreated = await pool.query(checkIfCreatedQuery, [id])
+    const { created_by } = checkIfCreated.rows[0]
+
+    if(created_by === user_id){
+        const deleteJobQuery = `DELETE FROM public.job WHERE job_id = $1;`
+        await pool.query(deleteJobQuery, [id])
+        res.status(200).json({msg: 'Job removed'})
+    }
+    else{
+        res.status(403).json({msg: 'Forbidden User'})
+    }
 }
 
 const getAllJobs = async (req, res) => {

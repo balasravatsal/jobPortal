@@ -4,16 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import FormRowSelect from "../../components/FormRowSelect";
 import {clearInput, createJob, editJob, handleChange} from "../../features/job/jobSlice";
-import {getUserFromLocalStorage} from "../../utils/localStorage";
+// import {getUserFromLocalStorage} from "../../utils/localStorage";
 import {useEffect} from "react";
-import {loginUser} from "../../features/user/UserSlice";
+// import {loginUser} from "../../features/user/UserSlice";
 
 const AddJob = () => {
     let {
         isLoading,
         position,
         company,
-        job_location: job_location,
+        job_location,
         job_type,
         jobTypeOptions,
         status,
