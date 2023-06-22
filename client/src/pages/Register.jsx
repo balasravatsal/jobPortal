@@ -24,6 +24,8 @@ const Register = () => {
 
     const navigate = useNavigate()
 
+    const roleList = ['employee', 'employer']
+
     const toggleMember = () => {
         setValues({...values, isMember: !values.isMember})
     }
@@ -34,7 +36,7 @@ const Register = () => {
     }
     const onSubmit = (e) => {
         e.preventDefault()
-        const {name, email, password, isMember} = values
+        const {name, email, password, isMember, role} = values
         if(!email || !password || (!isMember && !name)) {
             toast.error('Please fill all details')
             return;
@@ -42,7 +44,7 @@ const Register = () => {
         if(isMember) {
             dispatch(loginUser({email: email, password: password}))
         }else{
-        dispatch(registerUser({name, email, password}))
+        dispatch(registerUser({name, email, password, role}))
     }}
 
     useEffect(() => {
@@ -74,12 +76,12 @@ const Register = () => {
                          value={values.password}
                          handleChange={handleChange}
                 />
-                {/*<FormRowSelect*/}
-                {/*    name='status'*/}
-                {/*    value={status}*/}
-                {/*    handleChange={handleJobInput}*/}
-                {/*    list={statusOptions}*/}
-                {/*/>*/}
+                <FormRowSelect
+                    name='role'
+                    value={values.role}
+                    handleChange={handleChange}
+                    list={ roleList }
+                />
 
                 <button type={'submit'}
                         className={'btn btn-block'}

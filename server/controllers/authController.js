@@ -12,6 +12,7 @@ const registerUser = async (req, res) => {
     if ( !email || !password || !name ) {
         throw new BadRequestError ('please provide required details')
     }
+    console.log(req.body)
     const emailAlreadyExistsQuery = `SELECT * FROM "user" WHERE user_email = $1;`
     await pool.query(emailAlreadyExistsQuery, [email], (error, result) => {
         if(result.rowCount > 0){
