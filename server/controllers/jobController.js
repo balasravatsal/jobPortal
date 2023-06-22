@@ -1,8 +1,9 @@
 import pool from "../db.js";
 import {BadRequestError} from "../errors/index.js";
+import moment from 'moment';
 
 const createJob = async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     // console.log(localStorage)
     const { company, position, status, job_type, job_location} = req.body
     const user_id = req.user.userId
@@ -46,18 +47,68 @@ const getAllJobs = async (req, res) => {
 }
 const updateJob = async (req, res) => {
     const { id } = req.params
-    console.log(req.params)
+    // console.log(req.params)
     const { company, position, job_type, job_location, status } = req.body
-    console.log(req.body)
+    // console.log(req.body)
     // console.log(company)
+    // const user_id = req.user.userId
+    // console.log(req, '\n\n\n\n\n\n')
+    // console.log(user_id)
+    const modifyJobQuery = `UPDATE public.job SET company=$1, "position"=$2, status=$3, job_type=$4, job_location=$5, updated_at=CURRENT_TIMESTAMP WHERE job_id=$6;`
+    await pool.query(modifyJobQuery, [company, position, status, job_type, job_location, id])
 
-   const modifyJobQuery = `UPDATE public.job SET company=$1, "position"=$2, status=$3, job_type=$4, job_location=$5, updated_at=CURRENT_TIMESTAMP WHERE job_id=$6;`
-   const modifyJob = await pool.query(modifyJobQuery, [company, position, status, job_type, job_location, id])
-
-   return res.json('Successfully updated')
+    return res.json('Successfully updated')
 }
 const showStats = async (req, res) => {
-    res.status(200).send('show stats')
+    const user_id = req.user.userId
+    const getStatsQuery = `SELECT status, count(*) from "job" WHERE created_by = $1 GROUP BY status;`
+    const getStats = await pool.query(getStatsQuery, [user_id])
+
+    const result0 = getStats.rows.reduce((obj, { status, count }) => {
+        obj[status] = parseInt(count);
+        return obj;
+    }, {});
+
+    const finalObject = { stats: result0 };
+
+    const defaultStats = {
+        Interview: finalObject.stats.Interview || 0,
+        Registration: finalObject.stats.Registration || 0,
+        Closed: finalObject.stats.Closed || 0
+    }
+
+    const query = `
+      SELECT
+        EXTRACT(YEAR FROM created_at) AS year,
+        EXTRACT(MONTH FROM created_at) AS month,
+        COUNT(*) AS count
+      FROM
+        public.job
+      WHERE
+        created_by = $1
+      GROUP BY
+        EXTRACT(YEAR FROM created_at),
+        EXTRACT(MONTH FROM created_at)
+      ORDER BY
+        year DESC,
+        month DESC
+      LIMIT 6;
+    `;
+
+    const result = await pool.query(query, [user_id]);
+    // console.log(result.rows)
+    const monthlyApplications = result.rows.map((item) => {
+        const { year, month, count } = item;
+        const date = moment()
+            .month(month - 1)
+            .year(year)
+            .format('MMM Y');
+        return { date, count };
+    });
+    // console.log('kkk')
+    const reversedMonthlyApplications = monthlyApplications.reverse();
+    console.log(reversedMonthlyApplications)
+    res.status(200).json({defaultStats,  reversedMonthlyApplications})
 }
 
 export {createJob, deleteJob, getAllJobs, updateJob, showStats}

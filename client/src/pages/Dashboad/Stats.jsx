@@ -1,17 +1,26 @@
-import React, {useEffect} from 'react';
-// import {useDispatch} from "react-redux";
-// import {showStats} from "../../features/allJobs/allJobsSlice";
+import { useEffect } from 'react';
+import { StatsContainer, ChartsContainer } from '../../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { showStats } from '../../features/allJobs/allJobsSlice';
 
 const Stats = () => {
-    // const dispatch = useDispatch
-    //
-    //
-    // useEffect(() => {
-    //     dispatch(showStats())
-    // }, [])
+    const { monthlyApplications } = useSelector(
+        (store) => store.allJobs
+    );
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(showStats());
+    }, [dispatch]);
 
     return (
-        <h1>Stats</h1>
+        <>
+            <StatsContainer />
+            {monthlyApplications.length > 0 && <ChartsContainer />}
+            {() => {
+                console.log(monthlyApplications)
+            }}
+        </>
     );
 };
 

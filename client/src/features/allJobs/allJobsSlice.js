@@ -18,7 +18,7 @@ const initialState = {
     numOfPages: 1,
     page: 1,
     stats: {},
-    monthlyApplication: [],
+    monthlyApplications: [],
     ...initialFilterState
 }
 
@@ -48,8 +48,12 @@ export const showStats = createAsyncThunk (
     `allJobs/showStats`,
     async (_, thunkAPI) => {
         try {
-            const resp = await customFetch.get(`/jobs/stats`)
-            console.log('log')
+            const resp = await customFetch.get(`/jobs/stats`, {
+                headers: {
+                    authorization: `Bearer ${thunkAPI.getState().user.user.token}`
+                }
+            })
+            // console.log(resp.data)
             return resp.data
         }
         catch (e) {
@@ -84,6 +88,19 @@ const allJobsSlice = createSlice({
                 state.jobs = payload.jobs
             })
             .addCase(getAllJobs.rejected, (state, {payload}) => {
+                state.isLoading = false
+                toast.error(payload)
+            })
+            .addCase(showStats.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(showStats.fulfilled, (state, {payload}) => {
+                state.isLoading = false
+                state.stats = payload.defaultStats
+                state.monthlyApplications = payload.reversedMonthlyApplications
+                // state.monthlyApplication = payload.monthlyApplication
+            })
+            .addCase(showStats.rejected, (state, {payload}) => {
                 state.isLoading = false
                 toast.error(payload)
             })

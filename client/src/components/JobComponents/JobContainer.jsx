@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import Wrapper from "../assets/wrappers/JobsContainer";
-import Loading from "./Loading";
-import {getAllJobs} from "../features/allJobs/allJobsSlice";
+import Wrapper from "../../assets/wrappers/JobsContainer";
+import Loading from "../Loading";
+import {getAllJobs} from "../../features/allJobs/allJobsSlice";
 import Job from "./Job";
 
 const JobContainer = () => {

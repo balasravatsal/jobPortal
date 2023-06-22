@@ -1,7 +1,7 @@
 import React from 'react';
-import Wrapper from "../assets/wrappers/BigSidebar";
+import Wrapper from "../../assets/wrappers/BigSidebar";
 import {useSelector} from "react-redux";
-import {Logo} from "./index";
+import {Logo} from "../index";
 import NavLinks from "./NavLinks";
 
 const BigSidebar = () => {

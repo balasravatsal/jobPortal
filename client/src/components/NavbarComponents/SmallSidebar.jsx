@@ -1,9 +1,9 @@
 import React from 'react';
-import Wrapper from "../assets/wrappers/SmallSidebar";
+import Wrapper from "../../assets/wrappers/SmallSidebar";
 import {FaTimes} from "react-icons/fa";
-import {Logo} from "./index";
+import {Logo} from "../index";
 import {useDispatch, useSelector} from "react-redux";
-import {toggleSidebar} from "../features/user/UserSlice";
+import {toggleSidebar} from "../../features/user/UserSlice";
 import NavLinks from "./NavLinks";
 
 const SmallSidebar = () => {

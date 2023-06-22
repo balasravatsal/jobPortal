@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Wrapper from "../assets/wrappers/RegisterPage";
-import {Alert, FormRow, Logo} from "../components";
+import { FormRow, Logo} from "../components";
 import {toast} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import {loginUser, registerUser} from "../features/user/UserSlice";
@@ -56,7 +56,6 @@ const Register = () => {
             <form className={'form'} onSubmit={onSubmit}>
                 <Logo/>
                 <h3>{values.isMember ? 'Login' : 'Register'}</h3>
-                {values.showAlert && <Alert/>}
                 {!values.isMember && <FormRow type={'text'}
                                               name={'name'}
                                               value={values.name}
