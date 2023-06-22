@@ -74,12 +74,12 @@ const Register = () => {
                          value={values.password}
                          handleChange={handleChange}
                 />
-                <FormRowSelect
-                    name='status'
-                    value={status}
-                    handleChange={handleJobInput}
-                    list={statusOptions}
-                />
+                {/*<FormRowSelect*/}
+                {/*    name='status'*/}
+                {/*    value={status}*/}
+                {/*    handleChange={handleJobInput}*/}
+                {/*    list={statusOptions}*/}
+                {/*/>*/}
 
                 <button type={'submit'}
                         className={'btn btn-block'}
