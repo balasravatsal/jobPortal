@@ -107,7 +107,7 @@ const showStats = async (req, res) => {
     });
     // console.log('kkk')
     const reversedMonthlyApplications = monthlyApplications.reverse();
-    console.log(reversedMonthlyApplications)
+    // console.log(reversedMonthlyApplications)
     res.status(200).json({defaultStats,  reversedMonthlyApplications})
 }
 

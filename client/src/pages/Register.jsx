@@ -24,7 +24,7 @@ const Register = () => {
 
     const navigate = useNavigate()
 
-    const roleList = ['employee', 'employer']
+    const roleList = ['Select Role', 'employee', 'employer']
 
     const toggleMember = () => {
         setValues({...values, isMember: !values.isMember})
@@ -37,15 +37,22 @@ const Register = () => {
     const onSubmit = (e) => {
         e.preventDefault()
         const {name, email, password, isMember, role} = values
-        if(!email || !password || (!isMember && !name)) {
+        if(!email || !password || (!isMember && !name && !role) || role === 'Select Role') {
             toast.error('Please fill all details')
             return;
         }
         if(isMember) {
             dispatch(loginUser({email: email, password: password}))
         }else{
-        dispatch(registerUser({name, email, password, role}))
-    }}
+            if(role !== 'Select Role' && role !== ''){
+                console.log(name, email, password, role)
+                dispatch(registerUser({name, email, password, role}))
+            }
+            else{
+                toast.warn('Select a role to continue')
+            }
+        }
+    }
 
     useEffect(() => {
         if(user) {

@@ -6,9 +6,10 @@ import JobInfo from './JobInfo';
 import moment from 'moment';
 import { deleteJob, setEditJob } from '../../features/job/jobSlice';
 import {toast} from "react-toastify";
+import {Button} from "@mui/material";
 
 const Job = ({job_id, position, company, job_location, job_type, created_at, status, created_by}) => {
-    const { user_id } = useSelector(store => store.user.user)
+    const { user_id, role } = useSelector(store => store.user.user)
     
     const dispatch = useDispatch()
     const date = moment(created_at).format('MMM Do, YYYY');
@@ -32,7 +33,7 @@ const Job = ({job_id, position, company, job_location, job_type, created_at, sta
                 </div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad at cum cupiditate delectus eos expedita in ipsam iusto nam nesciunt non, nulla praesentium provident quibusdam rem repudiandae sapiente similique?</p>
                 <footer>
-                    { user_id === created_by &&
+                    { user_id === created_by && role === 'employer' &&
                     <div className={'actions'}>
                         <Link
                             to={`/add-job`}
@@ -60,6 +61,11 @@ const Job = ({job_id, position, company, job_location, job_type, created_at, sta
                             Delete
                         </button>
                     </div>
+                    }
+                    { role === 'employee' &&
+                        <Button variant="contained" endIcon={<SendIcon />}>
+                            Send
+                        </Button>
                     }
                 </footer>
             </div>

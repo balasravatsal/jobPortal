@@ -8,8 +8,8 @@ import 'express-async-errors';
 dotenv.config()
 
 const registerUser = async (req, res) => {
-    const {name, email, password} = req.body
-    if ( !email || !password || !name ) {
+    const {name, email, password, role} = req.body
+    if ( !email || !password || !name || !role) {
         throw new BadRequestError ('please provide required details')
     }
     console.log(req.body)
@@ -21,8 +21,8 @@ const registerUser = async (req, res) => {
         else {
             bcrypt.hash(password, 10, async (err, hashedPassword) => {
                 if (err) throw err
-                const registerUserQuery = `INSERT INTO "user" (user_id, user_email, user_name, password) VALUES (uuid_generate_v4(), $1, $2, $3) RETURNING *;`
-                const registerUser = await pool.query(registerUserQuery, [email, name, hashedPassword])
+                const registerUserQuery = `INSERT INTO "user" (user_id, user_email, user_name, password, role) VALUES (uuid_generate_v4(), $1, $2, $3, $4) RETURNING *;`
+                const registerUser = await pool.query(registerUserQuery, [email, name, hashedPassword, role])
 
                 // const secretKey = 'secret_key'; // Replace with actual secret key
                 const token = jwt.sign({user_id: registerUser.rows[0].user_id},
@@ -36,6 +36,7 @@ const registerUser = async (req, res) => {
                         name: registerUser.rows[0].user_name,
                         location: registerUser.rows[0].location,
                         company_name: registerUser.rows[0].company_name,
+                        role: registerUser.rows[0].role,
                         token: token,
                     },
                 })
