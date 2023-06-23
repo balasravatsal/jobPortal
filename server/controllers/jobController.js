@@ -22,7 +22,6 @@ const deleteJob = async (req, res) => {
     const {id} = req.params
     const user_id = req.user.userId
     // console.log(user_id)
-    // const checkIfCreated =
 
     const checkIfCreatedQuery = `SELECT created_by FROM public.job WHERE job_id = $1`
     const checkIfCreated = await pool.query(checkIfCreatedQuery, [id])
@@ -111,4 +110,26 @@ const showStats = async (req, res) => {
     res.status(200).json({defaultStats,  reversedMonthlyApplications})
 }
 
-export {createJob, deleteJob, getAllJobs, updateJob, showStats}
+const applyToJob = async (req, res) => {
+
+    const {user_id} = req.body
+    const {id: job_id} = req.params
+    // console.log(user_id, job_id)
+
+    const alreadyAppliedQuery = `SELECT count(user_id) FROM public.applied_by WHERE job_id = $1 AND applied_by.user_id = $2`
+    const alreadyApplied = await pool.query(alreadyAppliedQuery, [job_id, user_id])
+    const {count} = alreadyApplied.rows[0]
+    // console.log(count)
+
+    if(count >= 1) {
+        return res.status(400).json('You have already applied here')
+    }
+    else {
+        const addRelationQuery = `INSERT INTO public.applied_by (job_id, user_id) VALUES ($1, $2);`
+        await pool.query(addRelationQuery, [job_id, user_id])
+        return res.status(200).json('Your response has been recorded')
+    }
+}
+
+
+export {createJob, deleteJob, getAllJobs, updateJob, showStats, applyToJob}

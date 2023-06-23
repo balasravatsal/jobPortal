@@ -17,9 +17,6 @@ const Stats = () => {
         <>
             <StatsContainer />
             {monthlyApplications.length > 0 && <ChartsContainer />}
-            {() => {
-                console.log(monthlyApplications)
-            }}
         </>
     );
 };

@@ -83,12 +83,13 @@ const Register = () => {
                          value={values.password}
                          handleChange={handleChange}
                 />
-                <FormRowSelect
-                    name='role'
-                    value={values.role}
-                    handleChange={handleChange}
-                    list={ roleList }
-                />
+                {!values.isMember &&
+                    <FormRowSelect
+                        name='role'
+                        value={values.role}
+                        handleChange={handleChange}
+                        list={roleList}
+                    />}
 
                 <button type={'submit'}
                         className={'btn btn-block'}

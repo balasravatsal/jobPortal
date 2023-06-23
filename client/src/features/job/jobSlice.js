@@ -81,6 +81,25 @@ export const editJob = createAsyncThunk(
     }
 )
 
+export const applyForJob = createAsyncThunk(
+    `job/applyForJob`,
+    async (job_id, thunkAPI) => {
+        console.log(getUserFromLocalStorage())
+        try{
+            const resp = await customFetch.post(`/jobs/${job_id}`, getUserFromLocalStorage(), {
+                headers:{
+                    authorization: `Bearer ${thunkAPI.getState().user.user.token}`
+                }
+            })
+            // console.log('...', resp)
+            return resp.data
+        }
+        catch (e) {
+            thunkAPI.dispatch(hideLoading())
+            return thunkAPI.rejectWithValue((e.response.data))
+        }
+    }
+)
 
 const jobSlice = createSlice({
     name: 'job',
@@ -132,6 +151,15 @@ const jobSlice = createSlice({
             })
             .addCase(editJob.rejected, (state, { payload }) => {
                 toast.error(payload);
+            })
+            .addCase(applyForJob.pending, (state) => {
+                state.isLading = true
+            })
+            .addCase(applyForJob.fulfilled, (state, {payload}) => {
+                toast(payload)
+            })
+            .addCase(applyForJob.rejected, (state, {payload}) => {
+                toast.error(payload)
             })
     }
 });

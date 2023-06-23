@@ -32,6 +32,7 @@ const registerUser = async (req, res) => {
                 // const user = registerUser.rows[0]
                 res.status(200).json({
                     user: {
+                        user_id: registerUser.rows[0].user_id,
                         email: registerUser.rows[0].user_email,
                         name: registerUser.rows[0].user_name,
                         location: registerUser.rows[0].location,
@@ -65,7 +66,7 @@ const loginUser = async (req, res) => {
 
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (isPasswordMatch) {
-        // console.log('Nice password');
+        // console.log(user);
         res.status(200).json({
             user: {
                 user_id: user.user_id,
@@ -73,6 +74,7 @@ const loginUser = async (req, res) => {
                 name: user.user_name,
                 location: user.location,
                 company_name: user.company_name,
+                role: user.role,
                 token: token,
             },
         });
@@ -94,7 +96,7 @@ const updateUser = async (req, res) => {
         throw new BadRequestError('Please provide all details')
     }
     const updateUserQuery = `UPDATE "user" SET user_name = $1, user_email = $2, location = $3, company_name = $4 WHERE user_id = $5;`
-    const updateUser = await pool.query(updateUserQuery, [name, email, location, company, userId])
+    await pool.query(updateUserQuery, [name, email, location, company, userId])
     // console.log(updateUser)
     // console.log('authController')
     res.send('update user')

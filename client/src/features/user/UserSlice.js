@@ -29,8 +29,8 @@ export const loginUser = createAsyncThunk (
         // console.log(`Login user: ${JSON.stringify(user)}`)
         try {
             const resp = await customFetch.post('/auth/login', user)
+            console.log(resp)
             return resp.data
-            // console.log(resp)
         }
         catch (err) {
             return thunkAPI.rejectWithValue(err)

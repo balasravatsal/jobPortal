@@ -4,6 +4,7 @@ import Wrapper from '../../assets/wrappers/StatsContainer';
 import { useSelector } from 'react-redux';
 import {BsPersonCircle} from "react-icons/bs";
 import {FcCancel} from "react-icons/fc";
+import RegisteredApplicationModal from "./RegisteredApplicationModal";
 
 const StatsContainer = () => {
     const { stats } = useSelector((store) => store.allJobs);
@@ -35,7 +36,8 @@ const StatsContainer = () => {
     return (
         <Wrapper style={{padding: '4rem 4rem 0 4rem'}}>
             {defaultStats.map((item, index) => {
-                return <StatsItem key={index} {...item} />;
+                return <RegisteredApplicationModal key={index} {...item}/>
+                // return <StatsItem key={index} {...item} />;
             })}
         </Wrapper>
     );
