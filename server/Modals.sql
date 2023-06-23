@@ -1,28 +1,3 @@
--- id => UUID
-
-CREATE TABLE user(
-    user_id int primary key not null,
-    user_email varchar(64) not null,
-    username varchar(64) not null,
-    password varchar(32) not null,
-    location varchar(64) not null
-);
-
-create table job(
-    job_id int primary key not null,
-    job_title varchar(64) not null,
-    job_description varchar(256) not null,
-    location varchar(64) not null
---     user_id int FOREIGN KEY REFERENCES user(user_id)
-);
-
-create table employee (
-    emp_id int primary key not null,
-    emp_name varchar(64),
-    emp_email varchar(64),
-    emp_password varchar(64)
---     resume
-);
 --
 -- create table applied_jobs (
 --     job_id int FOREIGN KEY REFERENCES job(job_id),
@@ -31,6 +6,38 @@ create table employee (
 
 ALTER TABLE "user" ADD COLUMN role VARCHAR(50);
 
-update "user" set role = 'employer';
+-- update "user" set role = 'employer';
 
 select * from "user";
+
+CREATE TABLE applied_by (
+  job_id UUID REFERENCES job (job_id),
+  user_id UUID REFERENCES "user" (user_id)
+);
+
+
+
+--   CREATE TABLE job (
+--     job_id uuid PRIMARY KEY,
+--     company VARCHAR(64) NOT NULL,
+--     position VARCHAR(64) NOT NULL,
+--     status VARCHAR(64) NOT NULL,
+--     job_type VARCHAR(64) NOT NULL,
+--     job_location VARCHAR(255) DEFAULT 'my city' NOT NULL,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     created_by UUID NOT NULL,
+--     FOREIGN KEY (created_by) REFERENCES "user"(user_id)
+--   );
+
+
+--   CREATE TABLE applied_by (
+--   job_id UUID REFERENCES job (job_id),
+--   user_id UUID REFERENCES "user" (user_id)
+-- );
+
+
+-- ALTER TABLE "user" ADD COLUMN role VARCHAR(50);
+
+
+-- update "user" set role = 'employer' where role is null;

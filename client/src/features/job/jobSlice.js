@@ -84,7 +84,7 @@ export const editJob = createAsyncThunk(
 export const applyForJob = createAsyncThunk(
     `job/applyForJob`,
     async (job_id, thunkAPI) => {
-        console.log(getUserFromLocalStorage())
+        // console.log(getUserFromLocalStorage())
         try{
             const resp = await customFetch.post(`/jobs/${job_id}`, getUserFromLocalStorage(), {
                 headers:{
@@ -126,7 +126,7 @@ const jobSlice = createSlice({
             .addCase(createJob.pending, (state) => {
                 state.isLoading = true
             })
-            .addCase(createJob.fulfilled, (state, {payload}) => {
+            .addCase(createJob.fulfilled, (state) => {
                 state.isLoading = false
                 toast('New job listed!')
             })

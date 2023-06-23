@@ -10,7 +10,11 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 1000,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -20,16 +24,16 @@ const style = {
 export default function RegisteredApplicationModal({count, title, icon, color, bcg }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
-        setOpen(true)
-        handleApplied()
+        if(title === 'Registration applications') {
+            console.log(title)
+            setOpen(true)
+            handleApplied()
+        }
     };
     const handleClose = () => setOpen(false);
 
     const handleApplied = () => {
-        if(title === 'Registration applications') {
-            console.log(title)
-            // dispatch
-        }
+            console.log('title')
     }
 
     return (

@@ -1,5 +1,4 @@
-import Wrapper from '../../assets/wrappers/StatItem';
-import {RegisteredApplicationModal} from "../index";
+import Wrapper from '../../assets/wrappers/StatItem.js';
 
 const StatsItem = ({ count, title, icon, color, bcg }) => {
 

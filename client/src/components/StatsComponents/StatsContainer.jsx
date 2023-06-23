@@ -1,4 +1,3 @@
-import StatsItem from './StatsItem';
 import { FaWpforms} from 'react-icons/fa';
 import Wrapper from '../../assets/wrappers/StatsContainer';
 import { useSelector } from 'react-redux';

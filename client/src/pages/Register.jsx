@@ -63,7 +63,7 @@ const Register = () => {
     }, [user, navigate])
 
     return (
-        <Wrapper classname={'full-page'}>
+        <Wrapper>
             <form className={'form'} onSubmit={onSubmit}>
                 <Logo/>
                 <h3>{values.isMember ? 'Login' : 'Register'}</h3>
