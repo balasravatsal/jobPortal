@@ -10,4 +10,3 @@ import ChartsContainer from "./StatsComponents/ChartsContainer";
 import RegisteredApplicationModal from "./StatsComponents/RegisteredApplicationModal";
 
 export {Logo, FormRow, Navbar, BigSidebar, SmallSidebar, JobContainer, SearchContainer, ChartsContainer, StatsContainer, RegisteredApplicationModal}
-
