@@ -7,13 +7,13 @@ import Job from "./Job";
 
 const JobContainer = () => {
 
-    const { jobs, isLoading } = useSelector(store => store.allJobs)
+    const { jobs, isLoading, search, searchStatus, searchType } = useSelector(store => store.allJobs)
     const dispatch = useDispatch()
 
 
     useEffect(() =>{
         dispatch(getAllJobs())
-    }, [dispatch])
+    }, [dispatch, search, searchStatus, searchType])
 
     if(isLoading) {
         return(

@@ -5,8 +5,8 @@ import {toast} from "react-toastify";
 
 const initialFilterState = {
     search: '',
-    searchStatus: '',
-    searchType: '',
+    searchStatus: 'all',
+    searchType: 'all',
     sort: 'latest',
     sortOptions: ['latest', 'oldest', 'A - Z', 'Z - A']
 }
@@ -26,7 +26,13 @@ const initialState = {
 export const getAllJobs = createAsyncThunk(
     'allJobs/getJobs',
     async (_, thunkAPI) => {
-        let url = '/jobs'
+
+        const { search, searchStatus, searchType } = thunkAPI.getState().allJobs
+
+        let url = `/jobs?status=${searchStatus}&jobType=${searchType}`
+        if(search) {
+            url += `&search=${search}`
+        }
         // console.log(thunkAPI.getState())
         try{
             const resp = await customFetch.get(url, {
@@ -76,6 +82,13 @@ const allJobsSlice = createSlice({
         },
         hideLoading: (state) => {
             state.isLoading = false
+        },
+        handleChange: (state, {payload: {name, value}}) => {
+            // state.page = 1 todo
+            state[name]=value
+        },
+        clearFilters: (state) => {
+            return {...state, ...initialFilterState}
         }
     },
     extraReducers:(builder)=> {
@@ -109,7 +122,7 @@ const allJobsSlice = createSlice({
 
 
 
-export const { showLoading, hideLoading } = allJobsSlice.actions
+export const { showLoading, hideLoading, clearFilters, handleChange } = allJobsSlice.actions
 
 export default allJobsSlice.reducer
 
