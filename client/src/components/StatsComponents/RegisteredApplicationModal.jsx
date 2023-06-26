@@ -38,7 +38,7 @@ export default function RegisteredApplicationModal({count, title, icon, color, b
 
 
     const handleOpen = () => {
-        if (title === 'Open Jobs') {
+        if (title === 'Open Jobs' && user.role === 'employer') {
             handleApplied()
             setOpen(true)
         }
@@ -63,7 +63,7 @@ export default function RegisteredApplicationModal({count, title, icon, color, b
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <Typography id="modal-modal-title" variant="h4" component="h2">
                         Applicants details
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 5 }} style={{maxHeight: 600, overflow: 'auto'}}>

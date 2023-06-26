@@ -3,8 +3,11 @@ import {Error, Landing, ProtectedRoute, Register} from "./pages";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 import {AddJob, AllJobs, Profile, SharedLayout, Stats} from "./pages/Dashboad";
+import {useSelector} from "react-redux";
 
-function App() {
+const App = () => {
+    const {user} = useSelector(store => store.user)
+    // console.log(user)
     return (
         <>
             <BrowserRouter>
@@ -16,7 +19,7 @@ function App() {
                     }>
                         <Route index element={<Stats/>}/>
                         <Route path={'all-jobs'} element={<AllJobs/>}/>
-                        <Route path={'add-job'} element={<AddJob/>}/>
+                        { user && user.role === 'employer' && <Route path={'add-job'} element={<AddJob/>}/> }
                         <Route path={'profile'} element={<Profile/>}/>
                     </Route>
                     <Route path={'/register'} element={<Register/>}/>

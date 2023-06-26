@@ -33,7 +33,7 @@ export const loginUser = createAsyncThunk (
             return resp.data
         }
         catch (err) {
-            return thunkAPI.rejectWithValue(err)
+            return thunkAPI.rejectWithValue(err.msg)
         }
     }
 )
@@ -115,9 +115,9 @@ const userSlice = createSlice({
                 addUserToLocalStorage(user)
                 toast.success(`Welcome back ${user.name}`)
             })
-            .addCase(loginUser.rejected, (state, {payload}) => {
+            .addCase(loginUser.rejected, (state) => {
                 state.isLoading = false
-                toast.error(payload)
+                toast.error('Invalid credentials')
             })
             .addCase(updateUser.pending, (state) => {
                 state.isLoading = true;

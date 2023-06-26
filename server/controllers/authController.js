@@ -75,7 +75,8 @@ const loginUser = async (req, res) => {
                 location: user.location,
                 company_name: user.company_name,
                 role: user.role,
-                token: token,
+                resume_link: user.resume_link,
+                token: token
             },
         });
     } else {
@@ -108,7 +109,7 @@ const registeredApplicant = async (req, res) => {
     // console.log(user_id)
 
     const allRegisteredApplicantQuery =
-        `SELECT u.user_id, u.user_email, u.user_name, j.position
+        `SELECT u.user_id, u.user_email, u.user_name, u.resume_link, j.position
          FROM public."user" u
                   INNER JOIN public.applied_by ab ON u.user_id = ab.user_id
                   INNER JOIN public.job j ON ab.job_id = j.job_id

@@ -8,7 +8,7 @@ import NavLinks from "./NavLinks";
 
 const SmallSidebar = () => {
 
-    const {isSideBarOpen} = useSelector((store) => store.user)
+    const {isSideBarOpen, user} = useSelector((store) => store.user)
     const dispatch = useDispatch()
     const toggle = () => {
         dispatch(toggleSidebar())
@@ -24,7 +24,7 @@ const SmallSidebar = () => {
                     <header>
                         <Logo />
                     </header>
-                    <NavLinks toggleSidebar={toggle}/>
+                    <NavLinks toggleSidebar={toggle} role={user.role}/>
                 </div>
             </div>
         </Wrapper>

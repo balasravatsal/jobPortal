@@ -56,7 +56,7 @@ const getAllJobs = async (req, res) => {
             count++
         }
         if (search) {
-            conditions.push(`position LIKE $${count}`);
+            conditions.push(`position ILIKE $${count}`);
             params.push(`%${search}%`);
             count++
         }
