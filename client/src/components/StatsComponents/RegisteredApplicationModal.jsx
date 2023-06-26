@@ -43,6 +43,7 @@ export default function RegisteredApplicationModal({count, title, icon, color, b
             setOpen(true)
         }
     };
+
     const handleClose = () => setOpen(false);
 
 
