@@ -15,8 +15,8 @@ export const registerUser = createAsyncThunk(
         // console.log(`Register User: ${JSON.stringify(user)}`)
         try {
             const resp = await customFetch.post('/auth/register', user)
+            console.log(resp.data)
             return resp.data
-            // console.log(resp)
         }
         catch (err) {
             return thunkAPI.rejectWithValue(err)
@@ -29,7 +29,7 @@ export const loginUser = createAsyncThunk (
         // console.log(`Login user: ${JSON.stringify(user)}`)
         try {
             const resp = await customFetch.post('/auth/login', user)
-            console.log(resp)
+            // console.log(resp)
             return resp.data
         }
         catch (err) {
@@ -55,6 +55,26 @@ export const updateUser = createAsyncThunk(
         }
     }
 )
+
+export const registeredApplicant = createAsyncThunk(
+    `user/registeredApplicant`,
+    async (user, thunkAPI) => {
+        try {
+            const resp = await customFetch.get(`/auth/registeredApplicant`, {
+                headers:{
+                    authorization: `Bearer ${thunkAPI.getState().user.user.token}`
+                }
+            })
+            // console.log(resp.data)
+            return resp.data
+        }
+        catch (e) {
+            console.log('error coming')
+            console.log(e)
+        }
+    }
+)
+
 
 const userSlice = createSlice({
     name: 'user',
@@ -100,18 +120,19 @@ const userSlice = createSlice({
                 toast.error(payload)
             })
             .addCase(updateUser.pending, (state) => {
-                state.isLoading = true
+                state.isLoading = true;
             })
-            .addCase(updateUser.fulfilled, (state, {payload}) => {
-                const {user} = payload
-                state.user = user
-                state.isLoading = false
-                addUserToLocalStorage(user)
-                toast.success(`Information has been updated`)
+            .addCase(updateUser.fulfilled, (state, { payload }) => {
+                const { user } = payload;
+                // console.log(payload)
+                state.isLoading = false;
+                state.user = user;
+                addUserToLocalStorage(user);
+                toast.success(`Information Updated!`);
             })
-            .addCase(updateUser.rejected, (state, {payload}) => {
-                state.isLoading = false
-                toast.error(payload)
+            .addCase(updateUser.rejected, (state, { payload }) => {
+                state.isLoading = false;
+                toast.error(payload);
             })
         // extraReducers: {
         //     [registerUser.pending]: (state) => {

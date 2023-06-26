@@ -13,12 +13,13 @@ const Profile = () => {
         email: user?.email || '',
         company: user?.company_name || '',
         location: user?.location || '',
+        resume_link: user?.resume_link || '',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { name, email, company, location } = userData;
-        if (!name || !email || !company || !location) {
+        const { name, email, company, location, resume_link } = userData;
+        if (!name || !email || !company || !location || !resume_link) {
             toast.error('please fill out all fields');
             return;
         }
@@ -65,6 +66,14 @@ const Profile = () => {
                         value={userData.location}
                         handleChange={handleChange}
                     />
+                    <FormRow
+                        type='text'
+                        labelText='resume link'
+                        name='resume_link'
+                        value={userData.resume_link}
+                        handleChange={handleChange}
+                    />
+
                     <button type='submit' className='btn btn-block' disabled={isLoading}>
                         {isLoading ? 'Please Wait...' : 'save changes'}
                     </button>

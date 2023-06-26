@@ -7,7 +7,7 @@ import Pool from 'pg'
 const pool = new Pool.Pool({
 
     user: 'node_user',
-    password: '9352',
+    password: '1234',
     host: 'localhost',
     port: '5432',
     database: 'jobz'

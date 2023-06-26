@@ -39,34 +39,38 @@ const deleteJob = async (req, res) => {
 
 const getAllJobs = async (req, res) => {
         const { status, jobType, search } = req.query;
-        console.log(req.query)
+        // console.log(req.query)
         let query = `SELECT * FROM "job"`;
         let conditions = [];
         let params = [];
-
+        let count = 1
         // Add conditions based on query parameters
         if (status && status !== 'all') {
-            conditions.push('status = $1');
+            conditions.push(`status = $${count}`);
             params.push(status);
+            count++
         }
-        if (jobType && jobType !== 'all') {
-            conditions.push('job_type = $2');
-            params.push(jobType);
+        if (jobType && jobType !== `all`) {
+            conditions.push(`job_type = $${count}`);
+            params.push(jobType)
+            count++
         }
         if (search) {
-            conditions.push('position = $3');
+            conditions.push(`position LIKE $${count}`);
             params.push(`%${search}%`);
+            count++
         }
 
         // Construct the WHERE clause
         if (conditions.length > 0) {
             query += ' WHERE ' + conditions.join(' AND ');
         }
-
+    // console.log(query)
+    // console.log(params)
         try {
             // Execute the SQL query using pool.query
             const result = await pool.query(query, params);
-
+            // console.log(result)
             const jobs = result.rows;
             const totalJobs = result.rowCount;
 
@@ -75,15 +79,6 @@ const getAllJobs = async (req, res) => {
             console.error('Error executing SQL query:', error);
             res.status(500).json({ error: 'Internal Server Error' });
         }
-
-
-
-
-
-
-
-
-
 
     // const jobsQuery = `SELECT * FROM "job";`
     // const jobs = await pool.query(jobsQuery)

@@ -90,17 +90,37 @@ const updateUser = async (req, res) => {
     // console.log(req.body)
     // console.log(req.user)
     // console.log(req)
-    const {email, name, company, location} = req.body
+    const {email, name, company, location, resume_link} = req.body
     const { userId } = req.user
-    if (!location || !name || !email || !company) {
+    if (!location || !name || !email || !company || !resume_link) {
         throw new BadRequestError('Please provide all details')
     }
-    const updateUserQuery = `UPDATE "user" SET user_name = $1, user_email = $2, location = $3, company_name = $4 WHERE user_id = $5;`
-    await pool.query(updateUserQuery, [name, email, location, company, userId])
+    const updateUserQuery = `UPDATE "user" SET user_name = $1, user_email = $2, location = $3, company_name = $4, resume_link = $5 WHERE user_id = $6;`
+    await pool.query(updateUserQuery, [name, email, location, company, resume_link, userId])
     // console.log(updateUser)
     // console.log('authController')
-    res.send('update user')
+    const thatUser = await pool.query(`SELECT * FROM "user" WHERE user_id = $1;`, [userId])
+    res.status(201).json(thatUser.rows[0])
 }
 
-export {registerUser, loginUser, updateUser}
+const registeredApplicant = async (req, res) => {
+    const user_id = req.user.userId
+    // console.log(user_id)
+
+    const allRegisteredApplicantQuery =
+        `SELECT u.user_id, u.user_email, u.user_name, j.position
+         FROM public."user" u
+                  INNER JOIN public.applied_by ab ON u.user_id = ab.user_id
+                  INNER JOIN public.job j ON ab.job_id = j.job_id
+         WHERE j.created_by = $1;
+        `
+    // console.log(allRegisteredApplicantQuery)
+    const allRegisteredApplicant = await pool.query(allRegisteredApplicantQuery, [user_id])
+    const result = allRegisteredApplicant.rows
+    return res.status(200).json(result)
+}
+
+
+
+export {registerUser, loginUser, updateUser, registeredApplicant}
 

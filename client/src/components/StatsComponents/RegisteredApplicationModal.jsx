@@ -1,9 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Wrapper from "../../assets/wrappers/StatItem";
+import RegisteredList from "./RegisteredList";
+import {useDispatch, useSelector} from "react-redux";
+import {registeredApplicant} from "../../features/user/UserSlice";
+import {useState} from "react";
 
 const style = {
     position: 'absolute',
@@ -14,7 +17,7 @@ const style = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 1000,
+    width: 1100,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -23,18 +26,25 @@ const style = {
 
 export default function RegisteredApplicationModal({count, title, icon, color, bcg }) {
     const [open, setOpen] = React.useState(false);
+    const [list, setList] = useState([])
+    const { user } = useSelector(store => store.user)
+    const dispatch = useDispatch()
+
+    const handleApplied = async () => {
+        const applicantList = await dispatch(registeredApplicant(user))
+        setList(applicantList.payload)
+        return applicantList.payload
+    }
+
+
     const handleOpen = () => {
-        if(title === 'Registration applications') {
-            console.log(title)
-            setOpen(true)
+        if (title === 'Open Jobs') {
             handleApplied()
+            setOpen(true)
         }
     };
     const handleClose = () => setOpen(false);
 
-    const handleApplied = () => {
-            console.log('title')
-    }
 
     return (
         <div>
@@ -53,20 +63,11 @@ export default function RegisteredApplicationModal({count, title, icon, color, b
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        apply for Job
+                        Applicants details
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 3 }}>
-                        By confirming, you are about to apply for the selected job.
+                    <Typography id="modal-modal-description" sx={{ mt: 5 }} style={{maxHeight: 600, overflow: 'auto'}}>
+                        <RegisteredList list={list}/>
                     </Typography>
-                    <Button
-                        variant="contained"
-                        sx={{ml: 27, mt:2}}
-                        onClick={() => {
-                            handleClose()
-                        }}
-                    >
-                        Confirm
-                    </Button>
                 </Box>
             </Modal>
         </div>
