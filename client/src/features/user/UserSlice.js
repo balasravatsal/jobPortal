@@ -60,7 +60,7 @@ export const registeredApplicant = createAsyncThunk(
     `user/registeredApplicant`,
     async (user, thunkAPI) => {
         try {
-            const resp = await customFetch.get(`/auth/registeredApplicant`, {
+            const resp = await customFetch.post(`/auth/registeredApplicant`, user, {
                 headers:{
                     authorization: `Bearer ${thunkAPI.getState().user.user.token}`
                 }

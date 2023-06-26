@@ -3,7 +3,7 @@ import {loginUser, registerUser, updateUser, registeredApplicant} from "../contr
 import auth from "../middleware/auth.js";
 const router = express.Router()
 
-router.route(`/registeredApplicant`).get(auth, registeredApplicant)
+router.route(`/registeredApplicant`).post(auth, registeredApplicant)
 router.route(`/register`).post(registerUser)
 router.route(`/login`).post(loginUser)
 router.route(`/updateUser`).patch(auth, updateUser)

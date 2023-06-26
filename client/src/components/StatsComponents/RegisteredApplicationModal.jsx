@@ -38,7 +38,7 @@ export default function RegisteredApplicationModal({count, title, icon, color, b
 
 
     const handleOpen = () => {
-        if (title === 'Open Jobs' && user.role === 'employer') {
+        if (title === 'Open Jobs') {
             handleApplied()
             setOpen(true)
         }

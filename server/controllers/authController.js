@@ -106,19 +106,26 @@ const updateUser = async (req, res) => {
 
 const registeredApplicant = async (req, res) => {
     const user_id = req.user.userId
-    // console.log(user_id)
-
-    const allRegisteredApplicantQuery =
-        `SELECT u.user_id, u.user_email, u.user_name, u.resume_link, j.position
-         FROM public."user" u
-                  INNER JOIN public.applied_by ab ON u.user_id = ab.user_id
-                  INNER JOIN public.job j ON ab.job_id = j.job_id
-         WHERE j.created_by = $1;
-        `
-    // console.log(allRegisteredApplicantQuery)
-    const allRegisteredApplicant = await pool.query(allRegisteredApplicantQuery, [user_id])
-    const result = allRegisteredApplicant.rows
-    return res.status(200).json(result)
+    console.log(req.body)
+    if(req.body.role==='employer') {
+        const allRegisteredApplicantQuery =
+            `SELECT u.user_id, u.user_email, u.user_name, u.resume_link, j.position
+             FROM public."user" u
+                      INNER JOIN public.applied_by ab ON u.user_id = ab.user_id
+                      INNER JOIN public.job j ON ab.job_id = j.job_id
+             WHERE j.created_by = $1;
+            `
+        // console.log(allRegisteredApplicantQuery)
+        const allRegisteredApplicant = await pool.query(allRegisteredApplicantQuery, [user_id])
+        const result = allRegisteredApplicant.rows
+        return res.status(200).json(result)
+    }
+    else if (req.body.role === 'employee'){
+        const appliedAtJobsQuery = `SELECT * FROM public.job j INNER JOIN public.applied_by ab ON j.job_id = ab.job_id INNER JOIN public.user u ON ab.user_id = u.user_id WHERE u.user_id = $1;`
+        const appliedAtJobs = await pool.query(appliedAtJobsQuery, [user_id])
+        const result = appliedAtJobs.rows
+        return res.status(200).json(result)
+    }
 }
 
 
