@@ -32,7 +32,7 @@ const JobContainer = () => {
 
     return (
         <>
-            <Wrapper>
+            <Wrapper style={{margin: '3rem'}}>
                 <h5>Jobs Info</h5>
                 <div className={'jobs'}>
                     { jobs.map((job) => {

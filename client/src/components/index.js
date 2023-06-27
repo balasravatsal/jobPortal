@@ -9,5 +9,6 @@ import StatsContainer from "./StatsComponents/StatsContainer";
 import ChartsContainer from "./StatsComponents/ChartsContainer";
 import RegisteredApplicationModal from "./StatsComponents/RegisteredApplicationModal";
 import RegisteredList from "./StatsComponents/RegisteredList"
+import MyJobs from "./JobComponents/MyJobs";
 
-export {Logo, FormRow, Navbar, BigSidebar, SmallSidebar, JobContainer, SearchContainer, ChartsContainer, StatsContainer, RegisteredApplicationModal, RegisteredList}
+export {Logo, FormRow, Navbar, BigSidebar, SmallSidebar, JobContainer, SearchContainer, ChartsContainer, StatsContainer, RegisteredApplicationModal, RegisteredList, MyJobs}

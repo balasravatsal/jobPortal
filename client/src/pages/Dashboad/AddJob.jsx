@@ -1,4 +1,4 @@
-import { FormRow } from '../../components';
+import {FormRow, MyJobs} from '../../components';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -60,6 +60,7 @@ const AddJob = () => {
         margin: '0.5rem', // Set margin value as per your requirement
     };
     return (
+        <>
         <Wrapper style={containerStyle}>
             <form className='form'>
                 <h3>{isEditing ? 'edit job' : 'add job'}</h3>
@@ -124,6 +125,10 @@ const AddJob = () => {
                 </div>
             </form>
         </Wrapper>
+            <div style={{margin: '3rem'}}>
+                <MyJobs/>
+            </div>
+        </>
     );
 };
 
