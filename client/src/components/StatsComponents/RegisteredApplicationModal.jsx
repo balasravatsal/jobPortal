@@ -24,7 +24,7 @@ const style = {
     p: 4,
 };
 
-export default function RegisteredApplicationModal({count, title, icon, color, bcg }) {
+export default function RegisteredApplicationModal({ title, icon, color, bcg }) {
     const [open, setOpen] = React.useState(false);
     const [list, setList] = useState([])
     const { user } = useSelector(store => store.user)
@@ -38,7 +38,7 @@ export default function RegisteredApplicationModal({count, title, icon, color, b
 
 
     const handleOpen = () => {
-        if (title === 'Open Jobs') {
+        if (title === 'Applications') {
             handleApplied()
             setOpen(true)
         }
@@ -51,7 +51,7 @@ export default function RegisteredApplicationModal({count, title, icon, color, b
         <div>
             <Wrapper color={color} bcg={bcg} onClick={handleOpen}>
                 <header>
-                    <span className='count'>{count}</span>
+                    <span className='count'>{list.length}</span>
                     <span className='icon'>{icon}</span>
                 </header>
                 <h5 className='title'>{title}</h5>
@@ -67,7 +67,7 @@ export default function RegisteredApplicationModal({count, title, icon, color, b
                         Applicants details
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 5 }} style={{maxHeight: 600, overflow: 'auto'}}>
-                        <RegisteredList list={list}/>
+                        <RegisteredList list={list} userRole={user.role}/>
                     </Typography>
                 </Box>
             </Modal>

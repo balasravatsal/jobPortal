@@ -10,7 +10,7 @@ const StatsContainer = () => {
 
     const defaultStats = [
         {
-            title: 'Open Jobs',
+            title: 'Applications',
             count: stats.Registration || 0,
             icon: <FaWpforms />,
             color: '#e9b949',

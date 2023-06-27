@@ -13,13 +13,12 @@ const Profile = () => {
         email: user?.email || '',
         company: user?.company_name || '',
         location: user?.location || '',
-        resume_link: user?.resume_link || '',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { name, email, company, location, resume_link } = userData;
-        if (!name || !email || !company || !location || !resume_link) {
+        const { name, email, company, location } = userData;
+        if (!name || !email || !company || !location ) {
             toast.error('please fill out all fields');
             return;
         }
@@ -67,7 +66,7 @@ const Profile = () => {
                         handleChange={handleChange}
                     />
                     <FormRow
-                        type='text'
+                        type='file'
                         labelText='resume link'
                         name='resume_link'
                         value={userData.resume_link}

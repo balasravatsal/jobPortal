@@ -75,7 +75,7 @@ const loginUser = async (req, res) => {
                 location: user.location,
                 company_name: user.company_name,
                 role: user.role,
-                resume_link: user.resume_link,
+                resume_link: user.resume_link? user.resume_link: '',
                 token: token
             },
         });
@@ -90,14 +90,13 @@ const updateUser = async (req, res) => {
 
     // console.log(req.body)
     // console.log(req.user)
-    // console.log(req)
-    const {email, name, company, location, resume_link} = req.body
+    const {email, name, company, location} = req.body
     const { userId } = req.user
-    if (!location || !name || !email || !company || !resume_link) {
+    if (!location || !name || !email || !company ) {
         throw new BadRequestError('Please provide all details')
     }
-    const updateUserQuery = `UPDATE "user" SET user_name = $1, user_email = $2, location = $3, company_name = $4, resume_link = $5 WHERE user_id = $6;`
-    await pool.query(updateUserQuery, [name, email, location, company, resume_link, userId])
+    const updateUserQuery = `UPDATE "user" SET user_name = $1, user_email = $2, location = $3, company_name = $4 WHERE user_id = $5;`
+    await pool.query(updateUserQuery, [name, email, location, company, userId])
     // console.log(updateUser)
     // console.log('authController')
     const thatUser = await pool.query(`SELECT * FROM "user" WHERE user_id = $1;`, [userId])
