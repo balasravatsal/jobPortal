@@ -64,7 +64,7 @@ export default function RegisteredApplicationModal({ title, icon, color, bcg }) 
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h4" component="h2">
-                        Applicants details
+                        {user.role === 'employer'?  `Applicants details`: `Applied Jobs Details`}
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 5 }} style={{maxHeight: 600, overflow: 'auto'}}>
                         <RegisteredList list={list} userRole={user.role}/>
