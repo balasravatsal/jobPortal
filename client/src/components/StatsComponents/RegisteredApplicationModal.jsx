@@ -6,7 +6,7 @@ import Wrapper from "../../assets/wrappers/StatItem";
 import RegisteredList from "./RegisteredList";
 import {useDispatch, useSelector} from "react-redux";
 import {registeredApplicant} from "../../features/user/UserSlice";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const style = {
     position: 'absolute',
@@ -30,6 +30,7 @@ export default function RegisteredApplicationModal({ title, icon, color, bcg }) 
     const { user } = useSelector(store => store.user)
     const dispatch = useDispatch()
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleApplied = async () => {
         const applicantList = await dispatch(registeredApplicant(user))
         setList(applicantList.payload)
@@ -39,19 +40,21 @@ export default function RegisteredApplicationModal({ title, icon, color, bcg }) 
 
     const handleOpen = () => {
         if (title === 'Applications') {
-            handleApplied()
+
             setOpen(true)
         }
     };
 
     const handleClose = () => setOpen(false);
 
-
+    useEffect(() => {
+        handleApplied()
+    }, [handleApplied])
     return (
         <div>
             <Wrapper color={color} bcg={bcg} onClick={handleOpen}>
                 <header>
-                    <span className='count'>{list.length}</span>
+                    <span className='count'>{title==='Applications'? list.length: 0}</span>
                     <span className='icon'>{icon}</span>
                 </header>
                 <h5 className='title'>{title}</h5>
