@@ -105,7 +105,7 @@ const updateUser = async (req, res) => {
 
 const registeredApplicant = async (req, res) => {
     const user_id = req.user.userId
-    console.log(req.body)
+    // console.log(req.body)
     if(req.body.role==='employer') {
         const allRegisteredApplicantQuery =
             `SELECT u.user_id, u.user_email, u.user_name, u.resume_link, j.position
