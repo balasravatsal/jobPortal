@@ -12,17 +12,18 @@ const registerUser = async (req, res) => {
     if ( !email || !password || !name || !role) {
         throw new BadRequestError ('please provide required details')
     }
-    console.log(req.body)
-    const emailAlreadyExistsQuery = `SELECT * FROM "user" WHERE user_email = $1;`
-    await pool.query(emailAlreadyExistsQuery, [email], (error, result) => {
-        if(result.rowCount > 0){
-            res.status(500).json("Email already in use")
-        }
-        else {
+    console.log(req.body);
+    try {
+        const emailAlreadyExistsQuery = `SELECT * FROM "user" WHERE user_email = $1;`;
+        const result = await pool.query(emailAlreadyExistsQuery, [email]);
+
+        if (result.rowCount > 0) {
+            res.status(500).json("Email already in use");
+        } else {
             bcrypt.hash(password, 10, async (err, hashedPassword) => {
-                if (err) throw err
-                const registerUserQuery = `INSERT INTO "user" (user_id, user_email, user_name, password, role) VALUES (uuid_generate_v4(), $1, $2, $3, $4) RETURNING *;`
-                const registerUser = await pool.query(registerUserQuery, [email, name, hashedPassword, role])
+                if (err) throw err;
+                const registerUserQuery = `INSERT INTO "user" (user_id, user_email, user_name, password, role) VALUES (uuid_generate_v4(), $1, $2, $3, $4) RETURNING *;`;
+                const registerUser = await pool.query(registerUserQuery, [email, name, hashedPassword, role]);
 
                 // const secretKey = 'secret_key'; // Replace with actual secret key
                 const token = jwt.sign({user_id: registerUser.rows[0].user_id},
@@ -40,11 +41,16 @@ const registerUser = async (req, res) => {
                         role: registerUser.rows[0].role,
                         token: token,
                     },
-                })
-            })
+                });
+            });
         }
-    })
-}
+    } catch (error) {
+        // Handle the error appropriately
+        console.error(error);
+        throw new Error("An error occurred during user registration.");
+    }
+};
+
 
 const loginUser = async (req, res) => {
 

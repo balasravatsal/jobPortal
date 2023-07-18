@@ -12,17 +12,24 @@ const initialState = {
 export const registerUser = createAsyncThunk(
     'user/registerUser',
     async (user, thunkAPI) => {
-        // console.log(`Register User: ${JSON.stringify(user)}`)
         try {
             const resp = await customFetch.post('/auth/register', user)
             console.log(resp.data)
             return resp.data
-        }
-        catch (err) {
-            return thunkAPI.rejectWithValue(err)
+        } catch (err) {
+            const error = {
+                message: err.message,
+                name: err.name,
+                code: err.code,
+                config: err.config,
+                stack: err.stack,
+                // Include other necessary properties from the AxiosError object
+            }
+            return thunkAPI.rejectWithValue(error)
         }
     }
 )
+
 export const loginUser = createAsyncThunk (
     `user/loginUser`,
     async (user, thunkAPI) => {
