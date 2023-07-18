@@ -28,7 +28,9 @@ const pool = new pkg.Pool({
     port: process.env.DBPORT,
     database: process.env.DATABASE,
     connectionString: process.env.EXTERNALURL, // Use the external URL provided by Render
-    ssl: true,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 pool.connect()
