@@ -40,7 +40,6 @@ export default function RegisteredApplicationModal({ title, icon, color, bcg }) 
 
     const handleOpen = () => {
         if (title === 'Applications') {
-
             setOpen(true)
         }
     };
@@ -49,7 +48,7 @@ export default function RegisteredApplicationModal({ title, icon, color, bcg }) 
 
     useEffect(() => {
         handleApplied()
-    }, [handleApplied])
+    }, [])
     return (
         <div>
             <Wrapper color={color} bcg={bcg} onClick={handleOpen}>

@@ -72,7 +72,7 @@ export const registeredApplicant = createAsyncThunk(
                     authorization: `Bearer ${thunkAPI.getState().user.user.token}`
                 }
             })
-            // console.log(resp.data)
+            console.log(resp.data)
             return resp.data
         }
         catch (e) {

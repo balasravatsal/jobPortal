@@ -14,7 +14,8 @@ const MyJobs = () => {
     useEffect(() =>{
         dispatch(getAllJobs())
         setMyJobs(jobs.filter(job => job.created_by === user_id))
-    }, [dispatch, jobs, search, searchStatus, searchType, user_id])
+    // }, [dispatch, jobs, search, searchStatus, searchType, user_id])
+    }, [])
 
 
     if(myJobs.length === 0) {
