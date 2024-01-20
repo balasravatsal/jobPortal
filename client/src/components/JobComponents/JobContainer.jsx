@@ -13,8 +13,8 @@ const JobContainer = () => {
 
     useEffect(() =>{
         dispatch(getAllJobs())
-    // }, [dispatch, search, searchStatus, searchType])
-    }, [])
+    }, [dispatch, search, searchStatus, searchType])
+    // }, [])
 
     if(isLoading) {
         return(

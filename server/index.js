@@ -2,7 +2,7 @@ import express from 'express'
 import "express-async-errors"
 import dotenv from "dotenv";
 import cors from 'cors'
-// import morgan from 'morgan'
+import morgan from 'morgan' 
 
 // Connection with db
 import pool from './db.js'
@@ -19,7 +19,8 @@ import jobsRoutes from "./routes/jobsRoutes.js";
 const app = express()
 dotenv.config()
 app.use(cors())
-// if(process.env.NODE_ENV !== 'production') app.use(morgan('dev'))
+// app.use(morgan("tiny"))
+if(process.env.NODE_ENV !== 'production') app.use(morgan('dev'))
 app.use(express.json())
 
 
