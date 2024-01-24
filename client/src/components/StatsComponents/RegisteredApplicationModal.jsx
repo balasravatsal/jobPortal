@@ -48,6 +48,7 @@ export default function RegisteredApplicationModal({ title, icon, color, bcg }) 
 
     useEffect(() => {
         handleApplied()
+        // eslint-disable-next-line
     }, [])
     return (
         <div>
