@@ -6,7 +6,7 @@ import Job from "./Job";
 
 const MyJobs = () => {
     const [myJobs, setMyJobs] = useState([])
-    const { jobs, search, searchStatus, searchType } = useSelector(store => store.allJobs)
+    const { jobs } = useSelector(store => store.allJobs)
     const {user_id} = useSelector(store=>store.user.user)
     const dispatch = useDispatch()
 
@@ -15,6 +15,7 @@ const MyJobs = () => {
         dispatch(getAllJobs())
         setMyJobs(jobs.filter(job => job.created_by === user_id))
     // }, [dispatch, jobs, search, searchStatus, searchType, user_id])
+    // eslint-disable-next-line
     }, [])
 
 
