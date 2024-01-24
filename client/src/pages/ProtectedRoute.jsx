@@ -8,7 +8,7 @@ const ProtectedRoute = ({children}) => {
     const {user} = useSelector((store) => store.user)
 
     if(!user) {
-        toast.warn('Demo User: "vat@vat"\nPassword: "vat"')
+        toast.warn('Demo User: "vat@vat" and Password: "vat"')
         return <Navigate to={'/landing'} />
     }
     return children
